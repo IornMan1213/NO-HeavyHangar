@@ -3,3 +3,6 @@ obj/
 bin/
 *.pdb
 release/
+unity/Mods/
+blender/out/
+blender/tex_hangar/

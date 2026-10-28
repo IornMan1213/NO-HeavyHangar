@@ -4,6 +4,8 @@ A hangar large enough to spawn the biggest aircraft in Nuclear Option (built for
 plus a small plugin that places it at airbases and sends oversize aircraft to it. Made with
 [Blueprinter](https://github.com/nikkorap/NOBlueprinter-Releases).
 
+![A B-52 in the heavy hangar, its apron joining the taxiway](docs/images/hangar.jpg)
+
 ## The building
 
 | | |
@@ -30,19 +32,27 @@ damaged, repaired and captured with its airbase.
 
 ## Where it appears
 
-- **Automatically** (config `AutoPlace`, on by default): when a mission starts, the host puts one beside the
-  longest takeoff runway of each land airbase that has one at least 1,800 m long, if it finds a site that is:
-  - bare terrain: no tarmac, taxiways, buildings or water under the building or apron;
-  - flat within 5 m, with the apron edge no more than 1.5 m above the ground;
-  - joined to the runway edge by a taxi path no steeper than 10 %.
+- **Automatically** (config `AutoPlace`, on by default): when a mission starts, the host puts one at each land
+  airbase whose longest takeoff runway is at least 1,800 m, against one of the airbase's own taxiways:
+  - the apron's front edge overlaps the taxiway edge, level with it to within 0.3 m (a sloped lip covers the
+    rest), and the door faces the taxiway, so aircraft roll from the apron straight onto the taxi network;
+  - sites nearest a runway end are tried first, so a heavy aircraft gets the whole runway;
+  - the rest of the footprint must be bare, nearly flat terrain (within 5 m), clear of buildings, vehicles and
+    water, and at least 75 m outside every runway's edges and 300 m past its ends.
 
-  It tries 40 positions per airbase (along the runway, both sides, 70–220 m back from the edge), and retries for
-  about five minutes in case terrain around distant airbases hadn't loaded yet. Clients receive it through
-  normal network spawning.
+  Only if no taxiway site fits does it fall back to a site beside the runway, which has no paved link (the log
+  says so). It retries for about five minutes in case terrain around distant airbases hadn't loaded yet. Clients
+  receive it through normal network spawning.
+
+  ![The hangar at Boscali North: apron against the taxiway that leads to the runway threshold](docs/images/site_above.jpg)
+  ![A B-52 taxiing out of the hangar onto the taxiway](docs/images/taxi_out.jpg)
 - **Mission editor**: it's listed with the other buildings and can be attached to any airbase. An airbase that
   already has one is skipped by automatic placement.
 
 ## Config (`BepInEx/config/com.ironman1213.heavyhangar.cfg`)
+
+Placement runs on the host (or server) only, so only the host's `Placement` settings count. Routing is decided on
+the host too; keep `Routing` the same on every player's PC so the aircraft menu matches what the host spawns.
 
 | Key | Default | |
 |---|---|---|
@@ -53,7 +63,7 @@ damaged, repaired and captured with its airbase.
 | Debug.VerboseLog | false | log each rejected site and why |
 
 ## Install
-**Mod manager:** install it from a [NOMNOM](https://github.com/KopterBuzz/NOMNOM)-based manager such as NOMM, if it is listed there.
+**Mod manager:** it's listed on [NOMNOM](https://github.com/KopterBuzz/NOMNOM), so mod managers that use it (such as NOMM) can install and update it.
 
 **By hand:**
 1. Install [BepInEx 5](https://github.com/BepInEx/BepInEx) and [Blueprinter](https://github.com/nikkorap/NOBlueprinter-Releases)
@@ -71,7 +81,11 @@ exists in the mission editor, but nothing places it automatically or routes airc
 | `tools/blender_hangar.py` | The building, modelled procedurally in Blender (frames, roof, telescoping doors, lamps) and exported to FBX. |
 | `tools/make_hangar_textures.py` | The building's textures, drawn procedurally. |
 | `unity/Editor/HangarBuilder.cs` | Unity editor script: builds the hangar prefab and definition (the game's hangar_med as the component donor) and the .nobp. |
-| `tools/build_hangar.sh` | The full build. It was written for the author's Blueprinter workspace (shared with the B-52 mod), so its paths need adjusting elsewhere. |
+| `tools/build_hangar.sh`, `tools/env.sh` | The full build (Linux, or Windows with Git Bash): `HH_UNITY_PROJECT=<a Blueprinter Editor project> bash tools/build_hangar.sh`. Writes the .nobp and the plugin to `build/`. |
+| `tools/package.sh` | The release zip (`build/Heavy-Hangar_x.y.z.zip`) and its entry in `nomnom/HeavyHangar.json`. |
+
+The same hangar files live in [NO-B52](https://github.com/IornMan1213/NO-B52) (it builds the hangar with the B-52 and
+is where it's tested); the two copies are kept identical.
 
 No game files are included: Blueprinter references the game's own assets at runtime.
 
