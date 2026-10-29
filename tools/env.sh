@@ -66,8 +66,7 @@ unity_prepare() {
   local sa="$HH_UNITY_PROJECT/Library/ScriptAssemblies"
   mkdir -p "$sa"
   for f in "${GAME_DLLS[@]}"; do [[ -f "$sa/$f" ]] && chmod u+w "$sa/$f"; done
-  step "Unity compile" "" "$UNITY" -batchmode -nographics -quit -projectPath "$(winpath "$HH_UNITY_PROJECT")" \
-    -logFile "$(winpath "$LOGS/unity_compile_editor.log")"
+  step "Unity compile" "" unity_batch "$LOGS/unity_compile_editor.log"
   for f in "${GAME_DLLS[@]}"; do
     [[ -f "$sa/$f" ]] && chmod u+w "$sa/$f"
     cp "$HH_UNITY_PROJECT/Packages/nuclearoption/$f" "$sa/$f"
@@ -75,8 +74,14 @@ unity_prepare() {
   done
 }
 
-unity_run() {
-  "$UNITY" -batchmode -nographics -quit -projectPath "$(winpath "$HH_UNITY_PROJECT")" -logFile "$(winpath "$2")" -executeMethod "$1"
+# Unity logs to a file of its own; it is copied into the step's log too, so step's error scan sees compile errors
+# and builder failures even when Unity exits 0.
+unity_batch() {
+  local log="$1" rc=0; shift
+  "$UNITY" -batchmode -nographics -quit -projectPath "$(winpath "$HH_UNITY_PROJECT")" -logFile "$(winpath "$log")" "$@" || rc=$?
+  cat "$log"
+  return $rc
 }
+unity_run() { unity_batch "$2" -executeMethod "$1"; }
 
 blender_run() { "$BLENDER" -b --python-exit-code 1 "$@"; }
