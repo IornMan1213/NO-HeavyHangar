@@ -67,7 +67,7 @@ the host too; keep `Routing` the same on every player's PC so the aircraft menu 
 
 **By hand:**
 1. Install [BepInEx 5](https://github.com/BepInEx/BepInEx) and [Blueprinter](https://github.com/nikkorap/NOBlueprinter-Releases)
-   2.0.1 or newer.
+   2.1.1 or newer.
 2. Download `Heavy-Hangar_x.y.z.zip` from the [latest release](https://github.com/IornMan1213/NO-HeavyHangar/releases).
 3. Put `Heavy Hangar_x.y.z.nobp` and `HeavyHangar.dll` in `BepInEx/plugins/HeavyHangar/`. Delete older versions first.
 

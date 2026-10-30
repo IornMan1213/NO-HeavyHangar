@@ -35,7 +35,7 @@ v, name, sha, cat = sys.argv[1:5]
 p = "nomnom/HeavyHangar.json"; m = json.load(open(p, encoding="utf-8"))
 a = {"fileName": name, "version": v, "category": cat, "type": "addon", "gameVersion": "0.34.3",
      "downloadUrl": f"https://github.com/{m['githubOwner']}/{m['githubRepoName']}/releases/download/v{v}/{name}",
-     "hash": f"sha256:{sha}", "extends": {"id": "com.nikkorap.blueprinter", "version": "2.0.1"}}
+     "hash": f"sha256:{sha}", "extends": {"id": "com.nikkorap.blueprinter", "version": "2.1.1"}}
 m["artifacts"] = [a] + [x for x in m.get("artifacts", []) if x.get("version") != v]
 json.dump(m, open(p, "w", encoding="utf-8", newline="\n"), indent=2, ensure_ascii=False); open(p, "a").write("\n")
 print(f"NOMNOM manifest: {p} ({cat} {v})")

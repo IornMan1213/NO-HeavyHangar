@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+- Needs Blueprinter 2.1.1 (built with Blueprinter Editor 0.1.1, which pairs with 2.1.1's material texture fix).
+- The build stops on Unity compile errors and builder failures even when Unity exits normally.
+
 ## 0.2.0
 - **Automatic hangars now sit against a taxiway.** They used to go on grass 70 m or more from the runway, so big
   aircraft couldn't get from the apron to the runway. Now the apron meets one of the airbase's taxiways, level with

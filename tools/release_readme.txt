@@ -2,7 +2,7 @@ Heavy Aircraft Hangar for Nuclear Option, version {VERSION}
 https://github.com/IornMan1213/NO-HeavyHangar
 
 INSTALL
-1. You need BepInEx 5 and Blueprinter 2.0.1 or newer.
+1. You need BepInEx 5 and Blueprinter 2.1.1 or newer.
 2. Delete any older Heavy Hangar_*.nobp and HeavyHangar.dll first.
 3. Make a folder Nuclear Option/BepInEx/plugins/HeavyHangar/ and put everything from this zip in it.
    (Mod managers that use NOMNOM, such as NOMM, do this for you.)
